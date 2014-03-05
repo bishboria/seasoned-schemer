@@ -71,11 +71,6 @@
 ;; far.
 
 
-(define pick
-  (lambda (n lat)
-    (cond ((one? n) (car lat))
-	  (else (pick (sub1 n) (cdr lat))))))
-
 (print (pick 4 '(4 3 1 1 1)))
 (print (pick 2 '(2 4 3 1 1 1)))
 

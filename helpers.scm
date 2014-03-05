@@ -14,3 +14,10 @@
 (define one?
   (lambda (n)
     (= 1 n)))
+
+(define pick
+  (lambda (n lat)
+    (cond ((one? n) (car lat))
+	  (else (pick (sub1 n) (cdr lat))))))
+
+'helpers-loaded
