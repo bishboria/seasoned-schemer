@@ -25,6 +25,14 @@
     (cond ((one? n) (car lat))
 	  (else (pick (sub1 n) (cdr lat))))))
 
+(define-syntax letcc
+  (syntax-rules
+      ()
+    ((letcc foobar foobaz)
+     (call-with-current-continuation
+      (lambda (foobar)
+	foobaz)))))
+
 (define-syntax try
   (syntax-rules
       ()
@@ -35,5 +43,16 @@
 	   (lambda (x)
 	     (success a)))
 	 b)))))
+
+; annoyingly, there is a primitive find in scheme
+; that we're redefining.
+(define find
+  (lambda (n Ns Rs)
+    (letrec
+	((A (lambda (ns rs)
+	      (cond ((null? ns) #f)
+		    ((= n (car ns)) (car rs))
+		    (else (A (cdr ns) (cdr rs)))))))
+      (A Ns Rs))))
 
 'helpers-loaded
